@@ -5,13 +5,12 @@ Crée une classe Message qui affiche un message différent selon l'arguent pass�
 
 public class Message {
     public static void main(String[] args){
-        String message;
-        switch(args[0]){
-            case "français" : message = "Bonjour !"; break;
-            case "anglais" : message = "Hello !"; break;
-            case "espagnol" : message = "Hello !"; break;
-            default: message = "Aucune langue spécifiée"; break;
-        }
+        String message = switch(args[0]) {
+            case "français" -> "Bonjour !";
+            case "anglais" -> "Hello !";
+            case "espagnol" -> "Hola !";
+            default -> "Aucune langue spécifiée";
+        };
 
         System.out.println(message);
     }
