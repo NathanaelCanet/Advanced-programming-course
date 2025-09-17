@@ -19,14 +19,19 @@ import java.util.Arrays;
 public class StudentGradeCalculator {
 
     public static void main(String[] args) {
-            try (Scanner input = new Scanner(System.in)) {
-                int numStudents = amountOfStudent(input);
-                int numCourses = amountOfCourses(input);
-                Student[] tabStudents = arrayOfStudents(numStudents, numCourses, input);
-                for (Student student : tabStudents) {
-                    System.out.println(student);
-                }
+        try (Scanner input = new Scanner(System.in)) {
+            int numStudents = amountOfStudent(input);
+            int numCourses = amountOfCourses(input);
+            Student[] tabStudents = arrayOfStudents(numStudents, numCourses, input);
+            double totalAvg = 0;
+            System.out.println("\n--- Student Results ---");
+            for (Student student : tabStudents) {
+                System.out.println(student);
+                totalAvg += student.get_avg();
             }
+            double classAvg = tabStudents.length > 0 ? totalAvg / tabStudents.length : 0;
+            System.out.printf("\nClass average: %.2f\n", classAvg);
+        }
 
     }
 
@@ -107,12 +112,20 @@ public class StudentGradeCalculator {
     }
 
     static int amountOfStudent(Scanner input) {
-        System.out.print("Amount of students : ");
+        System.out.print("Enter the number of students: ");
+        while (!input.hasNextInt()) {
+            System.out.print("Please enter a valid integer for students: ");
+            input.next();
+        }
         return input.nextInt();
     }
 
     static int amountOfCourses(Scanner input) {
-        System.out.print("Amount of grades : ");
+        System.out.print("Enter the number of grades per student: ");
+        while (!input.hasNextInt()) {
+            System.out.print("Please enter a valid integer for grades: ");
+            input.next();
+        }
         return input.nextInt();
     }
 
@@ -125,18 +138,26 @@ public class StudentGradeCalculator {
     }
 
     static String inputName(Scanner input) {
-        System.out.print("Name : ");
+        System.out.print("Student name: ");
         input.nextLine(); // consume leftover newline
-        return input.nextLine();
+        String name = input.nextLine();
+        if (name.trim().isEmpty()) {
+            name = "Inconnu";
+        }
+        return name;
     }
 
     static double[] inputGrades(int amountOfCourses, Scanner input) {
         double[] grades = new double[amountOfCourses];
         for (int i = 0; i < amountOfCourses; i++) {
             do {
-                System.out.print("Note " + (i + 1) + "(0<note<20) : ");
+                System.out.print("Grade " + (i + 1) + " (0 <= grade <= 20): ");
+                while (!input.hasNextDouble()) {
+                    System.out.print("Please enter a valid number: ");
+                    input.next();
+                }
                 grades[i] = input.nextDouble();
-            } while (grades[i]<0 || grades[i]>20);
+            } while (grades[i] < 0 || grades[i] > 20);
         }
         return grades;
     }

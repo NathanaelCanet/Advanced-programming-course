@@ -10,17 +10,32 @@ import java.util.Arrays;
 public class ArrayResearch {
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(arrayOfIntInput(10)));
-    }
-
-    static int[] arrayOfIntInput(int n){
-        int[] arrayOfInt = new int[n];
         try (Scanner input = new Scanner(System.in)) {
-            for(int i = 0; i<n; i++){
-                System.out.print("Nombre " + (i+1) + ": ");
-                arrayOfInt[i] = input.nextInt();
+            int[] array = arrayOfIntInput(10, input);
+            System.out.println("Array: " + Arrays.toString(array));
+            System.out.print("Enter a number to search: ");
+            int searchNum = input.nextInt();
+            if (containsNumber(array, searchNum)) {
+                System.out.println(searchNum + " is present in the array.");
+            } else {
+                System.out.println(searchNum + " is NOT present in the array.");
             }
         }
+    }
+
+    static int[] arrayOfIntInput(int n, Scanner input){
+        int[] arrayOfInt = new int[n];
+        for(int i = 0; i<n; i++){
+            System.out.print("Nombre " + (i+1) + ": ");
+            arrayOfInt[i] = input.nextInt();
+        }
         return arrayOfInt;
+    }
+
+    static boolean containsNumber(int[] array, int num) {
+        for (int value : array) {
+            if (value == num) return true;
+        }
+        return false;
     }
 }

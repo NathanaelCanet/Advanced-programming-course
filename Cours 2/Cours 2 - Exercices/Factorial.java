@@ -7,18 +7,25 @@ public class Factorial {
     public static void main(String[] args) {
         try (Scanner input = new Scanner(System.in)) {
             System.out.print("Number : ");
+            if (!input.hasNextInt()) {
+                System.out.println("Please enter a valid integer.");
+                return;
+            }
             int n = input.nextInt();
-            var factorialOfN = factorialCalculator(n);
-            System.out.print("Factorielle : " + factorialOfN);
-
+            if (n < 0) {
+                System.out.println("Factorial is not defined for negative numbers.");
+                return;
+            }
+            long factorialOfN = factorialCalculator(n);
+            System.out.println("Factorielle : " + factorialOfN);
         }
     }
 
-    static int factorialCalculator(int n) {
-        int number = 1;
+    static long factorialCalculator(int n) {
+        long result = 1;
         for (int i = 2; i <= n; i++) {
-            number *= i;
+            result *= i;
         }
-        return number;
+        return result;
     }
 }

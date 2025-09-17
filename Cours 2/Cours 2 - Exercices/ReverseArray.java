@@ -4,21 +4,29 @@ nouveau tableau contenant les mêmes éléments mais dans l’ordre inverse. Ini
 dur dans le programme principal.
 */
 import java.util.Arrays;
+import java.util.Scanner;
+
 public class ReverseArray {
 
     public static void main(String[] args) {
-        int[] arrayOfInt = {1, 2, 3, 4};
-        int[] reversedArrayOfInt = arrayReverser(arrayOfInt);
-        System.out.println(Arrays.toString(reversedArrayOfInt));
+        try (Scanner input = new Scanner(System.in)) {
+            System.out.print("Enter array size: ");
+            int size = input.nextInt();
+            int[] array = new int[size];
+            for (int i = 0; i < size; i++) {
+                System.out.print("Element " + (i + 1) + ": ");
+                array[i] = input.nextInt();
+            }
+            int[] reversed = reverseArray(array);
+            System.out.println("Reversed array: " + Arrays.toString(reversed));
+        }
     }
 
-    static int[] arrayReverser(int[] arrayOfInt) {
-        int[] reversedArrayOfInt = new int[arrayOfInt.length];
-        int index = 0;
-        for (int i = arrayOfInt.length - 1; i >= 0; i--) {
-            reversedArrayOfInt[index] = arrayOfInt[i];
-            index ++;
+    static int[] reverseArray(int[] array) {
+        int[] reversed = new int[array.length];
+        for (int i = 0, j = array.length - 1; i < array.length; i++, j--) {
+            reversed[i] = array[j];
         }
-        return reversedArrayOfInt;
+        return reversed;
     }
 }
